@@ -532,3 +532,4 @@ def display_cart_summary():
         # Order type selection
         st.session_state.order_type = st.selectbox(
             "Order Type",
+            )
