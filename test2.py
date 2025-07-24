@@ -1,102 +1,152 @@
-# Final streamlined Streamlit cafe menu web app with UI/UX and SEO enhancements
-
 import streamlit as st
-import time
+from PIL import Image
 
-# --- Page config with favicon ---
 st.set_page_config(
-    page_title="Brew & Bite Cafe",
-    page_icon="🍵",
-    layout="wide"
+    page_title="Cafe Delight",
+    page_icon="☕",
+    layout="wide",
+    initial_sidebar_state="auto"
 )
 
-# --- Inject global custom CSS ---
+# --- Inject Custom CSS for Enhanced Visuals ---
 st.markdown("""
-    <style>
-        html, body, [class*="css"]  {
-            font-family: 'Segoe UI', sans-serif;
-            background-color: #fff8f2;
-        }
-        h1, h2, h3 {
-            color: #3e2723;
-        }
-        .stButton>button {
-            background-color: #ff7043;
-            color: white;
-            border-radius: 12px;
-            padding: 0.5em 1em;
-            transition: 0.3s;
-        }
-        .stButton>button:hover {
-            background-color: #ff5722;
-        }
-        footer {
-            visibility: hidden;
-        }
-        .footer-container {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            text-align: center;
-            padding: 10px;
-            background-color: #ffe0b2;
-            color: #4e342e;
-            font-size: 14px;
-            z-index: 100;
-        }
-    </style>
+<style>
+/* Global styles */
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #fffdf8;
+}
+
+/* Header */
+.header {
+    text-align: center;
+    font-size: 3em;
+    color: #4B2E83;
+    margin-top: 0.2em;
+    margin-bottom: 0.2em;
+}
+
+/* Navigation */
+.navbar {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    font-size: 1.2em;
+    background-color: #fdebd0;
+    padding: 1rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+.navbar a {
+    color: #4B2E83;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+.navbar a:hover {
+    color: #d35400;
+}
+
+/* Footer */
+footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #fdebd0;
+    color: #4B2E83;
+    text-align: center;
+    padding: 1rem;
+    font-size: 0.9em;
+    border-top: 1px solid #ccc;
+}
+
+/* Image styling */
+img {
+    border-radius: 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+</style>
 """, unsafe_allow_html=True)
 
-# --- Logo and Navigation ---
-col1, col2 = st.columns([1, 9])
+# --- Logo and Title ---
+col1, col2 = st.columns([1, 6])
 with col1:
-    st.image("https://cdn-icons-png.flaticon.com/512/2965/2965567.png", width=60)  # cafe logo
+    st.image("logo.png", width=80)
 with col2:
-    st.title("Brew & Bite Cafe")
-    st.caption("Fresh. Fun. Flavorful.")
+    st.markdown("<div class='header'>Cafe Delight ☕</div>", unsafe_allow_html=True)
 
-# --- Simple navigation ---
-menu_options = ["Home", "Menu", "About"]
-choice = st.selectbox("Navigate", menu_options, index=0, key="nav")
+# --- Navigation Bar ---
+st.markdown("""
+<div class='navbar'>
+    <a href='/?page=home'>Home</a>
+    <a href='/?page=menu'>Menu</a>
+    <a href='/?page=about'>About</a>
+</div>
+""", unsafe_allow_html=True)
 
-# --- Home Page ---
-if choice == "Home":
-    st.header("Welcome to Brew & Bite Cafe! 🍽️")
-    st.image("https://www.cafeflorista.com/_next/image?url=%2Fimages%2Fcafe%2FIMG-20240922-WA0015.jpg&w=640&q=75", use_container_width=True)
-    st.write("""
-        Enjoy a delightful experience with mouth-watering dishes, healthy smoothies, and indulgent desserts.
-        Our cafe brings flavors from around the world right to your plate!
-    """)
+# --- Routing Logic ---
+query_params = st.experimental_get_query_params()
+page = query_params.get("page", ["home"])[0]
 
-# --- About Page ---
-elif choice == "About":
-    st.header("About Us")
-    st.image("https://cdn.pixabay.com/photo/2015/10/30/20/13/coffee-1014535_1280.jpg", width=600)
-    st.write("""
-        At **Brew & Bite**, we believe food should be fun, fresh, and unforgettable.
-
-        Since 2020, we’ve been serving everything from sizzling starters to hearty mains, fresh smoothies, and sweet endings.
-
-        Our team of chefs pours passion into every bite and blend. Come join us for an experience that tastes as good as it feels.
-    """)
-    st.subheader("Connect with us")
+if page == "home":
+    st.image("hero.jpg", use_column_width=True)
     st.markdown("""
-        <p>
-            <a href='https://instagram.com' target='_blank'>🤍 Instagram</a> |
-            <a href='https://facebook.com' target='_blank'>💙 Facebook</a> |
-            <a href='mailto:contact@brewbite.com'>📧 Email</a>
-        </p>
-    """, unsafe_allow_html=True)
+    ### Welcome to Cafe Delight 🍰
+    Explore a delicious world of snacks, coffee, and good vibes!
+    
+    - 🍕 Freshly baked pizzas
+    - 🥤 Smoothies & Milkshakes
+    - 🥗 Healthy bowls & wraps
+    - 🍰 Homemade desserts
+    """)
 
-# --- Menu Page Placeholder ---
-elif choice == "Menu":
-    st.header("Our Delicious Menu")
-    st.info("Menu functionality coming here. Use your previous menu logic or integrate database logic.")
+    st.markdown("---")
+
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        st.image("smoothie.jpg", caption="Fresh Smoothies")
+    with col2:
+        st.image("wraps.jpg", caption="Healthy Wraps")
+    with col3:
+        st.image("dessert.jpg", caption="Delicious Desserts")
+
+elif page == "menu":
+    st.markdown("""
+    ### Our Menu 📋
+    Discover our handcrafted items!
+    (This section can be made dynamic with database integration)
+    """)
+
+    menu_items = {
+        "Starters": ["Garlic Bread", "Cheesy Nachos"],
+        "Beverages": ["Lemon Iced Tea", "Caramel Frappe"],
+        "Desserts": ["Choco Lava Cake", "Strawberry Tart"]
+    }
+
+    for category, items in menu_items.items():
+        st.subheader(category)
+        for item in items:
+            st.markdown(f"- {item} 🍽️")
+
+elif page == "about":
+    st.markdown("""
+    ### About Us ✨
+    Welcome to Cafe Delight – your cozy space to chill, munch, and sip! 😋
+    
+    Founded in 2024, our cafe blends modern vibes with classic flavors.
+
+    ### Our Team 👨‍🍳
+    Passionate foodies, award-winning chefs, and coffee lovers.
+
+    ### Follow us 💬
+    [Instagram](https://instagram.com) | [Facebook](https://facebook.com) | [Twitter](https://twitter.com)
+    """)
 
 # --- Footer ---
 st.markdown("""
-    <div class='footer-container'>
-        © 2025 Brew & Bite Cafe | Designed with ❤️ by [You]
-    </div>
+<footer>
+    Made with ❤️ by Cafe Delight | Connect with us @cafedelight | © 2025
+</footer>
 """, unsafe_allow_html=True)
