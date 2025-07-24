@@ -632,7 +632,7 @@ def display_floating_cart():
 
 def display_checkout():
    """Enhanced checkout page"""
-    st.markdown("""
+        st.markdown("""
     <div class="main-header">
         <h1 class="main-title">🧾 Order Summary</h1>
         <p class="subtitle">Review your order before confirmation</p>
